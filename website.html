@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0e14">
+<title>DAFTAR FT BR REYAN</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",Roboto,system-ui,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  background:url("https://files.catbox.moe/oy3dp9.png")
+    no-repeat center center fixed;
+  background-size:cover;
+  position:relative;
+  color:#fff;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  z-index:-1;
+}
+
+/* ================= LOADING ================= */
+
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  background:#0b0e14;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+  opacity:1;
+  visibility:visible;
+  transition:.4s ease;
+}
+
+#loadingScreen.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.loader{
+  width:58px;
+  height:58px;
+  border:5px solid rgba(255,215,0,.2);
+  border-top-color:#ffd700;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin-bottom:18px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+#loadingScreen p{
+  color:#ffd700;
+  font-size:14px;
+  letter-spacing:2px;
+  font-weight:700;
+}
+
+/* ================= VERIFY ================= */
+
+#verifyScreen{
+  position:fixed;
+  inset:0;
+  background:#0b0e14;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:1500;
+  transition:.4s ease;
+}
+
+#verifyScreen.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.verify-box{
+  width:100%;
+  max-width:400px;
+  background:#151a24;
+  border:1px solid #2a3142;
+  border-radius:20px;
+  padding:35px 25px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
+
+.verify-icon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.verify-box h2{
+  font-size:21px;
+  margin-bottom:8px;
+}
+
+.verify-box p{
+  color:#8b93a7;
+  font-size:14px;
+  line-height:1.5;
+  margin-bottom:22px;
+}
+
+.checkbox-area{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:15px;
+  background:#1e2430;
+  border:2px solid #2a3142;
+  border-radius:12px;
+  cursor:pointer;
+  text-align:left;
+  margin-bottom:18px;
+  transition:.25s;
+  user-select:none;
+}
+
+.checkbox-area:hover{
+  border-color:#ffd700;
+}
+
+.checkbox-area.checked{
+  border-color:#22c55e;
+  background:rgba(34,197,94,.08);
+}
+
+.custom-check{
+  width:27px;
+  height:27px;
+  min-width:27px;
+  border:3px solid #3a4356;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:transparent;
+  font-weight:bold;
+  transition:.25s;
+}
+
+.checkbox-area.checked .custom-check{
+  background:#22c55e;
+  border-color:#22c55e;
+  color:#fff;
+}
+
+.checkbox-label{
+  color:#d1d5db;
+  font-size:14px;
+}
+
+#verifyBtn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#ffd700;
+  color:#0b0e14;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  opacity:.4;
+  pointer-events:none;
+  transition:.25s;
+}
+
+#verifyBtn.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+#verifyBtn.active:hover{
+  background:#ffe44d;
+  transform:translateY(-2px);
+}
+
+/* ================= MAIN ================= */
+
+#mainContent{
+  width:100%;
+  max-width:500px;
+  display:none;
+  position:relative;
+  z-index:2;
+}
+
+#mainContent.show{
+  display:block;
+  animation:fadeUp .5s ease;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.card{
+  background:rgba(21,26,36,.96);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,215,0,.2);
+  border-radius:24px;
+  padding:28px 22px;
+  box-shadow:0 25px 60px rgba(0,0,0,.55);
+  text-align:center;
+}
+
+.header-logo{
+  font-size:42px;
+  margin-bottom:4px;
+}
+
+.card h1{
+  color:#ffd700;
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:7px;
+  text-shadow:0 0 20px rgba(255,215,0,.3);
+}
+
+.subtitle{
+  color:#8b93a7;
+  font-size:13px;
+  margin-bottom:24px;
+}
+
+/* ================= FT BUTTON ================= */
+
+.ft-options{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.ft-btn{
+  flex:1;
+  padding:21px 8px;
+  border:2px solid #2a3142;
+  border-radius:16px;
+  background:#1e2430;
+  color:#fff;
+  cursor:pointer;
+  transition:.25s;
+  font-weight:800;
+  font-size:19px;
+}
+
+.ft-btn:hover{
+  border-color:#ffd700;
+  transform:translateY(-3px);
+}
+
+.ft-btn.selected{
+  border-color:#ffd700;
+  background:rgba(255,215,0,.1);
+  box-shadow:0 0 20px rgba(255,215,0,.15);
+}
+
+.ft-btn small{
+  display:block;
+  margin-top:7px;
+  color:#8b93a7;
+  font-size:11px;
+  font-weight:400;
+}
+
+/* ================= CARA HITUNG ================= */
+
+.cara-hitung{
+  border-top:1px solid #2a3142;
+  padding-top:18px;
+}
+
+.cara-hitung h3{
+  color:#ffd700;
+  font-size:14px;
+  margin-bottom:11px;
+}
+
+.cara-hitung img{
+  width:100%;
+  border-radius:12px;
+  border:1px solid #2a3142;
+  display:block;
+}
+
+.placeholder-text{
+  color:#8b93a7;
+  font-size:12px;
+  padding:20px;
+  background:#1a202c;
+  border-radius:12px;
+}
+
+/* ================= POPUP ================= */
+
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(5px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:1000;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:.3s;
+}
+
+.popup-overlay.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.popup-box{
+  width:100%;
+  max-width:420px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#151a24;
+  border:1px solid #2a3142;
+  border-radius:24px;
+  padding:30px 24px;
+  text-align:center;
+  position:relative;
+  transform:scale(.9);
+  transition:.3s;
+  box-shadow:0 30px 70px rgba(0,0,0,.7);
+}
+
+.popup-overlay.active .popup-box{
+  transform:scale(1);
+}
+
+.close-popup{
+  position:absolute;
+  top:13px;
+  right:17px;
+  border:0;
+  background:none;
+  color:#8b93a7;
+  font-size:28px;
+  cursor:pointer;
+}
+
+.close-popup:hover{
+  color:#ffd700;
+}
+
+.popup-box h2{
+  color:#ffd700;
+  font-size:20px;
+  margin-bottom:6px;
+}
+
+.popup-sub{
+  color:#8b93a7;
+  font-size:13px;
+  margin-bottom:18px;
+  line-height:1.5;
+}
+
+/* ================= STEPS ================= */
+
+.steps{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.step-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#2a3142;
+}
+
+.step-dot.active{
+  background:#ffd700;
+  box-shadow:0 0 10px rgba(255,215,0,.6);
+}
+
+.step-dot.done{
+  background:#22c55e;
+}
+
+/* ================= QRIS ================= */
+
+.qris-img{
+  width:100%;
+  max-width:280px;
+  border-radius:14px;
+  border:3px solid #ffd700;
+  padding:6px;
+  background:#fff;
+  display:block;
+  margin:0 auto 16px;
+}
+
+.fee-text{
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  background:rgba(255,215,0,.08);
+  border:1px dashed #ffd700;
+  border-radius:12px;
+  padding:13px;
+  margin-bottom:17px;
+  line-height:1.5;
+}
+
+.fee-text span{
+  color:#ffd700;
+}
+
+.fee-pp{
+  display:block;
+  color:#d1d5db !important;
+  font-size:12px;
+  font-weight:500;
+  margin-top:5px;
+}
+
+/* ================= BUTTON ================= */
+
+.btn-primary,
+.btn-secondary,
+.btn-wa{
+  width:100%;
+  min-height:48px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.btn-primary{
+  border:0;
+  background:#ffd700;
+  color:#0b0e14;
+  margin-bottom:10px;
+}
+
+.btn-primary:hover:not(:disabled){
+  background:#ffe44d;
+  transform:translateY(-2px);
+}
+
+.btn-primary:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.btn-secondary{
+  border:2px solid #2a3142;
+  background:transparent;
+  color:#d1d5db;
+  font-weight:600;
+}
+
+.btn-secondary:hover{
+  border-color:#ffd700;
+  color:#ffd700;
+}
+
+.btn-wa{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border:0;
+  background:#25d366;
+  color:#fff;
+  text-decoration:none;
+  margin-top:11px;
+}
+
+.btn-wa:hover{
+  background:#1ebe5b;
+  transform:translateY(-2px);
+}
+
+/* ================= UPLOAD ================= */
+
+.upload-area{
+  display:block;
+  border:2px dashed #3a4356;
+  border-radius:14px;
+  padding:23px 15px;
+  margin:15px 0;
+  cursor:pointer;
+  background:#1a202c;
+  transition:.25s;
+}
+
+.upload-area:hover{
+  border-color:#ffd700;
+}
+
+.upload-area.uploaded{
+  border-color:#22c55e;
+  border-style:solid;
+  background:rgba(34,197,94,.06);
+}
+
+.upload-icon{
+  font-size:32px;
+  margin-bottom:7px;
+}
+
+.upload-area p{
+  color:#8b93a7;
+  font-size:13px;
+}
+
+.file-name{
+  color:#22c55e;
+  font-size:12px;
+  margin-top:6px;
+  word-break:break-word;
+}
+
+.hidden-input{
+  display:none;
+}
+
+.file-info{
+  color:#8b93a7;
+  font-size:11px;
+  margin:-6px 0 13px;
+}
+
+/* ================= SUCCESS ================= */
+
+.success-icon{
+  font-size:55px;
+  margin-bottom:10px;
+  animation:pop .5s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0)}
+  70%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+
+.success-title{
+  color:#22c55e;
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.success-desc{
+  color:#8b93a7;
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.detail-box{
+  background:#1a202c;
+  border:1px solid #2a3142;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:15px;
+  text-align:left;
+  font-size:12px;
+  line-height:1.9;
+}
+
+.label{
+  color:#8b93a7;
+}
+
+.value{
+  color:#ffd700;
+  font-weight:700;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:400px){
+  .card{
+    padding:24px 16px;
+  }
+
+  .card h1{
+    font-size:20px;
+  }
+
+  .ft-btn{
+    font-size:16px;
+    padding:18px 6px;
+  }
+
+  .popup-box{
+    padding:26px 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= VERIFY ================= -->
+
+<div id="verifyScreen">
+  <div class="verify-box">
+
+    <div class="verify-icon">🛡️</div>
+
+    <h2>Verifikasi Keamanan</h2>
+
+    <p>
+      Centang kotak di bawah untuk melanjutkan.
+    </p>
+
+    <div class="checkbox-area" id="checkboxArea">
+      <div class="custom-check" id="customCheck">✓</div>
+      <span class="checkbox-label">Saya bukan robot</span>
+    </div>
+
+    <button id="verifyBtn">
+      Verifikasi
+    </button>
+
+  </div>
+</div>
+
+<!-- ================= LOADING ================= -->
+
+<div id="loadingScreen" class="hidden">
+  <div class="loader"></div>
+  <p>Memuat Halaman...</p>
+</div>
+
+<!-- ================= MAIN ================= -->
+
+<div id="mainContent">
+
+  <div class="card">
+
+    <div class="header-logo">🏆</div>
+
+    <h1>DAFTAR FT BR REYAN</h1>
+
+    <p class="subtitle">
+      Silakan pilih paket FT yang ingin didaftarkan
+    </p>
+
+    <div class="ft-options">
+
+      <button
+        class="ft-btn"
+        type="button"
+        data-fee="3K"
+        data-amount="3000"
+        data-pp="PP 36K + SERTIFIKAT"
+      >
+        FEE 3K
+        <small>PP 36K + Sertifikat</small>
+      </button>
+
+      <button
+        class="ft-btn"
+        type="button"
+        data-fee="5K"
+        data-amount="5000"
+        data-pp="PP 50K + SERTIFIKAT"
+      >
+        FEE 5K
+        <small>PP 50K + Sertifikat</small>
+      </button>
+
+    </div>
+
+    <div class="cara-hitung">
+
+      <h3>📊 Cara Hitung Point</h3>
+
+      <img
+        src="https://files.catbox.moe/1cnbjy.png"
+        alt="Cara Hitung Point"
+        onerror="
+          this.style.display='none';
+          document.getElementById('placeholderPoint').style.display='block';
+        "
+      >
+
+      <div
+        id="placeholderPoint"
+        class="placeholder-text"
+        style="display:none;"
+      >
+        Gambar cara hitung point tidak tersedia.
+        <br>
+        Silakan hubungi admin.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ================= POPUP QRIS ================= -->
+
+<div class="popup-overlay" id="popupQris">
+
+  <div class="popup-box">
+
+    <button
+      class="close-popup"
+      type="button"
+      onclick="closePopup('popupQris')"
+      aria-label="Tutup"
+    >
+      ×
+    </button>
+
+    <div class="steps">
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+    </div>
+
+    <h2 id="qrisTitle">Pembayaran FT 3K</h2>
+
+    <p class="popup-sub">
+      Scan QRIS di bawah untuk melakukan pembayaran.
+    </p>
+
+    <img
+      src="https://files.catbox.moe/w89dvm.jpg"
+      alt="QRIS Pembayaran"
+      class="qris-img"
+    >
+
+    <div class="fee-text">
+      Transfer jumlahnya:
+      <span id="feeAmount">Rp 3.000</span>
+
+      <span
+        class="fee-pp"
+        id="feePp"
+      >
+        PP 36K + SERTIFIKAT
+      </span>
+    </div>
+
+    <button
+      class="btn-primary"
+      type="button"
+      onclick="openUpload()"
+    >
+      Saya Sudah Transfer
+    </button>
+
+    <button
+      class="btn-secondary"
+      type="button"
+      onclick="closePopup('popupQris')"
+    >
+      Kembali
+    </button>
+
+    <a
+      href="https://wa.me/6285752529008"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-wa"
+    >
+      💬 Hubungi Admin
+    </a>
+
+  </div>
+
+</div>
+
+<!-- ================= POPUP UPLOAD ================= -->
+
+<div class="popup-overlay" id="popupUpload">
+
+  <div class="popup-box">
+
+    <button
+      class="close-popup"
+      type="button"
+      onclick="closePopup('popupUpload')"
+    >
+      ×
+    </button>
+
+    <div class="steps">
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+    </div>
+
+    <h2>Upload Bukti Transfer</h2>
+
+    <p class="popup-sub">
+      Pilih bukti transfer Anda.
+    </p>
+
+    <div class="fee-text">
+
+      Fee FT
+      <span id="uploadFee">3K</span>
+      —
+      <span id="uploadAmount">Rp 3.000</span>
+
+      <span
+        class="fee-pp"
+        id="uploadPp"
+      >
+        PP 36K + SERTIFIKAT
+      </span>
+
+    </div>
+
+    <label
+      for="fileUpload"
+      class="upload-area"
+      id="uploadArea"
+    >
+
+      <div class="upload-icon">📤</div>
+
+      <p>
+        Klik untuk pilih bukti transfer
+      </p>
+
+      <div
+        class="file-name"
+        id="fileName"
+      ></div>
+
+    </label>
+
+    <input
+      type="file"
+      id="fileUpload"
+      class="hidden-input"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <div class="file-info">
+      JPG, PNG, WEBP • Maksimal 10 MB
+    </div>
+
+    <button
+      class="btn-primary"
+      id="btnKirim"
+      type="button"
+      disabled
+    >
+      Kirim & Konfirmasi WhatsApp
+    </button>
+
+    <button
+      class="btn-secondary"
+      type="button"
+      onclick="closePopup('popupUpload')"
+    >
+      Kembali
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ================= POPUP SUKSES ================= -->
+
+<div class="popup-overlay" id="popupSukses">
+
+  <div class="popup-box">
+
+    <div class="success-icon">✅</div>
+
+    <div class="success-title">
+      Anda Sudah TF!
+    </div>
+
+    <p class="success-desc">
+      Bukti transfer sudah dipilih.
+      <br>
+      Tekan tombol WhatsApp lalu
+      lampirkan file bukti transfer
+      ke chat admin.
+    </p>
+
+    <div class="detail-box">
+
+      <div>
+        <span class="label">Paket:</span>
+        <span class="value" id="suksesFee">
+          FT 3K
+        </span>
+      </div>
+
+      <div>
+        <span class="label">Jumlah Transfer:</span>
+        <span class="value" id="suksesAmount">
+          Rp 3.000
+        </span>
+      </div>
+
+      <div>
+        <span class="label">Keterangan:</span>
+        <span class="value" id="suksesPp">
+          PP 36K + SERTIFIKAT
+        </span>
+      </div>
+
+      <div>
+        <span class="label">Status:</span>
+        <span
+          class="value"
+          style="color:#22c55e;"
+        >
+          Menunggu Konfirmasi Admin
+        </span>
+      </div>
+
+    </div>
+
+    <a
+      id="waLink"
+      href="https://wa.me/6285752529008"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-wa"
+    >
+      💬 Konfirmasi ke Admin Sekarang
+    </a>
+
+    <button
+      class="btn-secondary"
+      style="margin-top:10px;"
+      type="button"
+      onclick="selesai()"
+    >
+      Selesai
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+"use strict";
+
+/* ================= DATA ================= */
+
+const ADMIN_WA = "6285752529008";
+
+let selectedFee = "3K";
+let selectedAmount = 3000;
+let selectedPp = "PP 36K + SERTIFIKAT";
+
+/* ================= ELEMENT ================= */
+
+const verifyScreen =
+  document.getElementById("verifyScreen");
+
+const loadingScreen =
+  document.getElementById("loadingScreen");
+
+const mainContent =
+  document.getElementById("mainContent");
+
+const checkboxArea =
+  document.getElementById("checkboxArea");
+
+const verifyBtn =
+  document.getElementById("verifyBtn");
+
+const fileUpload =
+  document.getElementById("fileUpload");
+
+const uploadArea =
+  document.getElementById("uploadArea");
+
+const fileName =
+  document.getElementById("fileName");
+
+const btnKirim =
+  document.getElementById("btnKirim");
+
+/* ================= FORMAT RUPIAH ================= */
+
+function formatRupiah(number){
+  return "Rp " + Number(number).toLocaleString("id-ID");
+}
+
+/* ================= VERIFIKASI ================= */
+
+let isChecked = false;
+
+checkboxArea.addEventListener("click", function(){
+
+  isChecked = !isChecked;
+
+  checkboxArea.classList.toggle(
+    "checked",
+    isChecked
+  );
+
+  verifyBtn.classList.toggle(
+    "active",
+    isChecked
+  );
+
+});
+
+/* ================= BUTTON VERIFIKASI ================= */
+
+verifyBtn.addEventListener("click", function(){
+
+  if(!isChecked) return;
+
+  verifyBtn.disabled = true;
+
+  verifyScreen.classList.add("hidden");
+
+  loadingScreen.classList.remove("hidden");
+
+  setTimeout(function(){
+
+    loadingScreen.classList.add("hidden");
+
+    mainContent.classList.add("show");
+
+  }, 1200);
+
+});
+
+/* ================= PILIH FT ================= */
+
+document
+  .querySelectorAll(".ft-btn")
+  .forEach(function(button){
+
+    button.addEventListener("click", function(){
+
+      document
+        .querySelectorAll(".ft-btn")
+        .forEach(function(btn){
+          btn.classList.remove("selected");
+        });
+
+      button.classList.add("selected");
+
+      selectedFee =
+        button.dataset.fee;
+
+      selectedAmount =
+        Number(button.dataset.amount);
+
+      selectedPp =
+        button.dataset.pp;
+
+      document.getElementById(
+        "qrisTitle"
+      ).textContent =
+        "Pembayaran FT " + selectedFee;
+
+      document.getElementById(
+        "feeAmount"
+      ).textContent =
+        formatRupiah(selectedAmount);
+
+      document.getElementById(
+        "feePp"
+      ).textContent =
+        selectedPp;
+
+      openPopup("popupQris");
+
+    });
+
+  });
+
+/* ================= POPUP ================= */
+
+function openPopup(id){
+
+  const popup =
+    document.getElementById(id);
+
+  if(!popup) return;
+
+  popup.classList.add("active");
+
+  document.body.style.overflow = "hidden";
+}
+
+function closePopup(id){
+
+  const popup =
+    document.getElementById(id);
+
+  if(!popup) return;
+
+  popup.classList.remove("active");
+
+  const anyOpen =
+    document.querySelector(
+      ".popup-overlay.active"
+    );
+
+  if(!anyOpen){
+    document.body.style.overflow = "";
+  }
+}
+
+/* ================= UPLOAD ================= */
+
+function openUpload(){
+
+  closePopup("popupQris");
+
+  document.getElementById(
+    "uploadFee"
+  ).textContent = selectedFee;
+
+  document.getElementById(
+    "uploadAmount"
+  ).textContent =
+    formatRupiah(selectedAmount);
+
+  document.getElementById(
+    "uploadPp"
+  ).textContent = selectedPp;
+
+  resetUpload();
+
+  openPopup("popupUpload");
+}
+
+/* ================= VALIDASI FILE ================= */
+
+fileUpload.addEventListener(
+  "change",
+  function(event){
+
+    const file =
+      event.target.files[0];
+
+    if(!file){
+      resetUpload();
+      return;
+    }
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+    if(!allowedTypes.includes(file.type)){
+
+      showFileError(
+        "File harus JPG, PNG, atau WEBP."
+      );
+
+      return;
+    }
+
+    if(file.size > 10 * 1024 * 1024){
+
+      showFileError(
+        "Ukuran gambar maksimal 10 MB."
+      );
+
+      return;
+    }
+
+    fileName.textContent =
+      "✓ " + file.name;
+
+    uploadArea.classList.add(
+      "uploaded"
+    );
+
+    btnKirim.disabled = false;
+
+  }
+);
+
+/* ================= ERROR FILE ================= */
+
+function showFileError(message){
+
+  fileUpload.value = "";
+
+  fileName.textContent =
+    message;
+
+  uploadArea.classList.remove(
+    "uploaded"
+  );
+
+  btnKirim.disabled = true;
+}
+
+/* ================= KIRIM ================= */
+
+btnKirim.addEventListener(
+  "click",
+  kirimBukti
+);
+
+function kirimBukti(){
+
+  const file =
+    fileUpload.files[0];
+
+  if(!file){
+
+    showFileError(
+      "Silakan pilih bukti transfer terlebih dahulu."
+    );
+
+    return;
+  }
+
+  document.getElementById(
+    "suksesFee"
+  ).textContent =
+    "FT " + selectedFee;
+
+  document.getElementById(
+    "suksesAmount"
+  ).textContent =
+    formatRupiah(selectedAmount);
+
+  document.getElementById(
+    "suksesPp"
+  ).textContent =
+    selectedPp;
+
+  const waText =
+`Halo Admin, saya sudah transfer FT BR REYAN.
+
+Paket: FT ${selectedFee}
+Jumlah Transfer: ${formatRupiah(selectedAmount)}
+Keterangan: ${selectedPp}
+Nama file bukti: ${file.name}
+
+Saya akan melampirkan bukti transfer ini di WhatsApp.
+Mohon dikonfirmasi. Terima kasih.`;
+
+  const waURL =
+    "https://wa.me/" +
+    ADMIN_WA +
+    "?text=" +
+    encodeURIComponent(waText);
+
+  document.getElementById(
+    "waLink"
+  ).href = waURL;
+
+  closePopup("popupUpload");
+
+  openPopup("popupSukses");
+}
+
+/* ================= RESET ================= */
+
+function resetUpload(){
+
+  fileUpload.value = "";
+
+  fileName.textContent = "";
+
+  uploadArea.classList.remove(
+    "uploaded"
+  );
+
+  btnKirim.disabled = true;
+}
+
+/* ================= SELESAI ================= */
+
+function selesai(){
+
+  closePopup("popupSukses");
+
+  selectedFee =
+    "3K";
+
+  selectedAmount =
+    3000;
+
+  selectedPp =
+    "PP 36K + SERTIFIKAT";
+
+  document
+    .querySelectorAll(".ft-btn")
+    .forEach(function(btn){
+      btn.classList.remove("selected");
+    });
+
+  resetUpload();
+
+}
+
+/* ================= KLIK LUAR POPUP ================= */
+
+document
+  .querySelectorAll(".popup-overlay")
+  .forEach(function(overlay){
+
+    overlay.addEventListener(
+      "click",
+      function(event){
+
+        if(event.target === overlay){
+          closePopup(overlay.id);
+        }
+
+      }
+    );
+
+  });
+
+/* ================= ESC ================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key !== "Escape") return;
+
+    const activePopup =
+      document.querySelector(
+        ".popup-overlay.active"
+      );
+
+    if(activePopup){
+      closePopup(activePopup.id);
+    }
+
+  }
+);
+</script>
+
+</body>
+</html>
